@@ -24,6 +24,7 @@ if 'token' not in telegram_data:
 elif 'chat_id' not in telegram_data:
     raise ValueError('Não foi encontrada a informação de chat ID no arquivo telegram_data.txt')
 
+# Cria um Objeto Bot do pacote telegram
 bot = telegram.Bot(token=telegram_data["token"])
 
 if requests.get(url=ENDPOINT_PING).status_code == 200:
@@ -31,8 +32,8 @@ if requests.get(url=ENDPOINT_PING).status_code == 200:
 
     resposta = requests.get(url=url).json()
     dados_moeda = resposta.get('ethereum', None)
-    preco = dados_moeda.get('brl', None)
-    atualizado_em = dados_moeda.get('last_updated_at', None)
+    preco = resposta.get('brl', None)
+    atualizado_em = resposta.get('last_updated_at', None)
 
     timestamp = datetime.fromtimestamp(atualizado_em).strftime('%x %X')
 
