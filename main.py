@@ -13,15 +13,13 @@ locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 moedas = {'bitcoin', 'ethereum'}
 
 # Dados para a conexão com o Bot do Telegram que virão do arquivo
-telegram_data = TelegramData('./telegram_data.txt').get_data()
+telegram_data = TelegramData(nome='CriptoJah')
+telegram_data.load_data_from('./telegram_data.txt')
 
 # Cria um Objeto Bot do pacote telegram
-bot = telegram.Bot(token=telegram_data["token"])
+bot = telegram.Bot(token=telegram_data.get_token())
 
-if CoinGeckoAPI.ping():
-    for moeda in moedas:
-        preco, timestamp = CoinGeckoAPI.get_precos(moeda)
-        asyncio.run(bot.send_message(text=f'Cotação de {moeda}: R$ {preco} em {timestamp}', chat_id=telegram_data["chat_id"]))
-        sleep(10)
-else:
-    print("API indisponível no momento. Tente mais tarde.")
+for moeda in moedas:
+    preco, timestamp = CoinGeckoAPI.get_precos(moeda)
+    asyncio.run(bot.send_message(text=f'Cotação de {moeda}: R$ {preco} em {timestamp}', chat_id=telegram_data.get_chat_id()))
+    sleep(10)

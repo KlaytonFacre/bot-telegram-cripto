@@ -24,4 +24,4 @@ class CoinGeckoAPI:
 
             return preco, timestamp
         else:
-            return None, None
+            raise Exception("API indisponível no momento. Tente mais tarde.")
