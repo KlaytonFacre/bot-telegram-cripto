@@ -3,7 +3,7 @@ class TelegramData:
         self._telegram_data = {}
         self._nome_bot = nome
 
-    def load_data_from(self, arquivo: str) -> dict:
+    def carregar_dados_de(self, arquivo: str) -> dict:
         with open(arquivo, 'r') as fd:
             for linha in fd:
                 self._telegram_data.setdefault(linha.split('=')[0], linha.split('=')[1].removesuffix('\n'))
